@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MailCraft AI — Professional AI Email Generator</title>
+    <meta
+      name="description"
+      content="Transform basic inputs into fully drafted, tone-calibrated, professional emails with structured sections, real-time preview, and export options."
+    />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366F1'><path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/></svg>" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Ambient Animated Background Glows -->
+    <div class="bg-ambient-glow" aria-hidden="true">
+      <div class="glow-orb-1"></div>
+      <div class="glow-orb-2"></div>
+      <div class="glow-orb-3"></div>
+    </div>
+
+    <div id="app">
+      <!-- Main Navigation Header -->
+      <header class="app-header">
+        <div class="header-brand">
+          <div class="brand-icon-wrapper" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <h1>
+              MailCraft AI
+              <span class="brand-version-badge">v2.5 PRO</span>
+            </h1>
+            <p class="brand-tagline">AI Professional Email Generator & Executive Copywriter</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button id="btn-wizard-toggle" class="btn btn-primary" style="padding: 7px 15px; font-size: 0.82rem; font-weight: 700; gap: 7px; background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%); box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);" title="Open 4-Step Prompt Wizard">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+            <span>✨ Prompt Wizard</span>
+          </button>
+
+          <button id="btn-theme-toggle" class="btn btn-ghost btn-icon-only" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+            <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
+          <button id="btn-history-toggle" class="btn btn-secondary" title="View Saved Drafts & History">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Drafts</span>
+            <span id="history-badge-count" class="brand-version-badge">0</span>
+          </button>
+
+          <button id="btn-settings-toggle" class="btn btn-ghost btn-icon-only" title="AI Settings & API Key" aria-label="Settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Quick Preset Template Bar -->
+      <nav class="presets-bar" aria-label="Preset Scenarios">
+        <div class="presets-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>Quick Scenarios:</span>
+        </div>
+        <div id="presets-chip-container" class="presets-chip-container" style="display: flex; gap: 8px;">
+          <!-- Dynamically populated preset chips -->
+        </div>
+      </nav>
+
+      <!-- Main Studio 2-Column Split -->
+      <main class="studio-main">
+        <!-- LEFT: Control Inputs Panel -->
+        <section class="controls-panel" aria-label="Email Parameters and Controls">
+          <!-- CARD 1: Recipient & Sender -->
+          <article class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Participants & Context</span>
+              </div>
+              <span class="section-badge">Required</span>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="input-recipient" class="form-label">Recipient Name</label>
+                <input
+                  type="text"
+                  id="input-recipient"
+                  class="input-field"
+                  placeholder="e.g. Dr. Sarah Jenkins"
+                  value="Dr. Sarah Jenkins"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="input-recipient-role" class="form-label">Recipient Title / Co.</label>
+                <input
+                  type="text"
+                  id="input-recipient-role"
+                  class="input-field"
+                  placeholder="e.g. VP of Product, CloudScale"
+                  value="VP of Product at CloudScale Systems"
+                />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="input-sender" class="form-label">Sender Name</label>
+                <input
+                  type="text"
+                  id="input-sender"
+                  class="input-field"
+                  placeholder="Your Name"
+                  value="Alex Rivera"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="input-sender-role" class="form-label">Sender Title / Org</label>
+                <input
+                  type="text"
+                  id="input-sender-role"
+                  class="input-field"
+                  placeholder="Your Position"
+                  value="Senior Solutions Architect, TechNova"
+                />
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2: Objective & Purpose -->
+          <article class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="22" y1="12" x2="18" y2="12"></line>
+                  <line x1="6" y1="12" x2="2" y2="12"></line>
+                  <line x1="12" y1="6" x2="12" y2="2"></line>
+                  <line x1="12" y1="22" x2="12" y2="18"></line>
+                </svg>
+                <span>Objective & Purpose</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="select-purpose" class="form-label">Email Category</label>
+              <select id="select-purpose" class="select-field">
+                <option value="Meeting Request">📅 Meeting Request / Scheduling</option>
+                <option value="Project Update">🚀 Project Status / Milestone Update</option>
+                <option value="Follow-Up">📬 Follow-Up on Proposal / Discussion</option>
+                <option value="Thank You">🙏 Post-Interview / Appreciation Thank You</option>
+                <option value="Issue Apology">⚠️ Issue Escalation & Apology</option>
+                <option value="Cold Outreach">🤝 Cold Partnership Outreach</option>
+                <option value="Job Application">💼 Job Application / Cover Inquiry</option>
+                <option value="Resignation Notice">📝 Formal Resignation Notice</option>
+                <option value="Custom">💡 Custom Purpose / Topic</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="group-custom-purpose" style="display: none;">
+              <label for="input-custom-purpose" class="form-label">Specific Subject / Topic Focus</label>
+              <input
+                type="text"
+                id="input-custom-purpose"
+                class="input-field"
+                placeholder="Describe your exact goal or topic"
+              />
+            </div>
+          </article>
+
+          <!-- CARD 3: Tone & Personality Controls -->
+          <article class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                <span>Tone Calibration</span>
+              </div>
+              <span id="tone-badge-display" class="section-badge">Polite & Warm</span>
+            </div>
+
+            <div class="tone-selector-grid" id="tone-selector-container">
+              <!-- Dynamically populated tone cards (formal, polite, concise, persuasive, urgent, casual) -->
+            </div>
+
+            <div style="margin-top: 14px;">
+              <div class="form-group">
+                <label class="form-label">
+                  <span>Detail & Length</span>
+                  <span id="label-detail-level" class="form-label-hint">Balanced (2-3 paragraphs)</span>
+                </label>
+                <div class="segmented-control" id="control-detail-level">
+                  <button type="button" class="segmented-pill" data-value="brief">Brief & Crisp</button>
+                  <button type="button" class="segmented-pill active" data-value="standard">Balanced</button>
+                  <button type="button" class="segmented-pill" data-value="detailed">Comprehensive</button>
+                </div>
+              </div>
+
+              <div class="toggle-row">
+                <span class="toggle-label">Include Bulleted Key Points</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggle-bullets" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 4: Key Points Builder -->
+          <article class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <span>Key Points & Agenda</span>
+              </div>
+              <button type="button" id="btn-quick-suggest" class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.72rem;">
+                ✨ Auto-Suggest
+              </button>
+            </div>
+
+            <div id="key-points-list" class="key-points-list">
+              <!-- Dynamically populated points items -->
+            </div>
+
+            <div class="add-point-row">
+              <button type="button" id="btn-add-point" class="btn btn-secondary" style="flex: 1;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add Key Point
+              </button>
+              <button type="button" id="btn-clear-points" class="btn btn-ghost" title="Clear all points">
+                Clear
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 5: Call to Action & Urgency -->
+          <article class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+                <span>Call to Action & Timeline</span>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="select-cta" class="form-label">Desired Action</label>
+                <select id="select-cta" class="select-field">
+                  <option value="schedule_call">📞 Schedule a Call / Sync</option>
+                  <option value="review_doc">📑 Review and Concur / Approve</option>
+                  <option value="confirm_receipt">✅ Confirm Receipt</option>
+                  <option value="fyi_only">ℹ️ No Reply Needed (FYI)</option>
+                  <option value="custom">✏️ Custom Action</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="input-timeframe" class="form-label">Timeframe / Urgency</label>
+                <input
+                  type="text"
+                  id="input-timeframe"
+                  class="input-field"
+                  placeholder="e.g. next Tuesday, before Friday EOD"
+                  value="next Tuesday or Wednesday"
+                />
+              </div>
+            </div>
+
+            <div class="form-group" id="group-custom-cta" style="display: none;">
+              <label for="input-custom-cta" class="form-label">Custom Action Request</label>
+              <input
+                type="text"
+                id="input-custom-cta"
+                class="input-field"
+                placeholder="State your exact request"
+              />
+            </div>
+          </article>
+
+          <!-- GENERATE ACTION BUTTON -->
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" id="btn-generate-email" class="btn btn-primary btn-primary-generate">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              </svg>
+              <span>Draft Professional Email</span>
+            </button>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.72rem; color: var(--text-dim);">
+              <span id="engine-status-indicator" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10B981;"></span>
+              <span id="engine-status-text">Instant Neural Synthesizer Active (Zero Latency)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: Live Output Preview Panel -->
+        <section class="preview-panel" aria-label="Generated Email Preview and Actions">
+          <!-- Preview Header Bar -->
+          <div class="preview-header-bar">
+            <div class="preview-view-tabs" role="tablist">
+              <button type="button" id="tab-client-view" class="tab-btn active" role="tab" aria-selected="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                <span>Email Client View</span>
+              </button>
+              <button type="button" id="tab-sections-view" class="tab-btn" role="tab" aria-selected="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                <span>Structured Sections</span>
+              </button>
+              <button type="button" id="tab-raw-view" class="tab-btn" role="tab" aria-selected="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                <span>Markdown / Raw</span>
+              </button>
+            </div>
+
+            <!-- Action Buttons Bar -->
+            <div class="preview-actions-bar">
+              <button type="button" id="btn-copy-full" class="btn btn-primary" title="Copy full email to clipboard">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy Email</span>
+              </button>
+
+              <button type="button" id="btn-open-mailto" class="btn btn-secondary" title="Open directly in Outlook, Apple Mail or default email client">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>Send Mail</span>
+              </button>
+
+              <div style="position: relative;">
+                <button type="button" id="btn-export-dropdown" class="btn btn-ghost" title="Export to File">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Export</span>
+                </button>
+                <div id="export-menu" style="display: none; position: absolute; right: 0; top: 110%; z-index: 50; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); min-width: 160px; padding: 4px;">
+                  <button type="button" class="export-option-btn btn-ghost btn" data-type="eml" style="width: 100%; justify-content: flex-start; padding: 8px 12px; font-size: 0.8rem;">
+                    📄 Download .EML (Outlook/Mail)
+                  </button>
+                  <button type="button" class="export-option-btn btn-ghost btn" data-type="md" style="width: 100%; justify-content: flex-start; padding: 8px 12px; font-size: 0.8rem;">
+                    📝 Download Markdown (.md)
+                  </button>
+                  <button type="button" class="export-option-btn btn-ghost btn" data-type="txt" style="width: 100%; justify-content: flex-start; padding: 8px 12px; font-size: 0.8rem;">
+                    📋 Download Text (.txt)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Rewrite Toolbar -->
+          <div class="rewrite-toolbar">
+            <div class="rewrite-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span>Instant AI Polish:</span>
+            </div>
+            <div class="rewrite-chips">
+              <button type="button" class="rewrite-pill-btn" data-action="more_concise" title="Remove filler, tighten sentences">
+                ⚡ More Concise
+              </button>
+              <button type="button" class="rewrite-pill-btn" data-action="more_polite" title="Add softening and warm courtesy markers">
+                🤝 More Polite
+              </button>
+              <button type="button" class="rewrite-pill-btn" data-action="more_formal" title="Upgrade vocabulary to corporate executive level">
+                👔 More Formal
+              </button>
+              <button type="button" class="rewrite-pill-btn" data-action="add_bullets" title="Convert main points to crisp bullet points">
+                • Format as Bullets
+              </button>
+            </div>
+          </div>
+
+          <!-- VIEW CONTAINER 1: Realistic Email Client Simulator -->
+          <div id="view-client-container" class="email-mockup-window">
+            <!-- Window Title bar -->
+            <div class="email-client-toolbar">
+              <div class="window-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+              </div>
+              <div class="client-app-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>MailCraft Message Viewer — Draft</span>
+              </div>
+              <div class="client-toolbar-actions">
+                <button type="button" id="btn-copy-subject" class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.72rem;" title="Copy only subject line">
+                  Copy Subject
+                </button>
+              </div>
+            </div>
+
+            <!-- Headers Section -->
+            <div class="email-headers-section">
+              <div class="subject-display-row">
+                <div style="flex: 1;">
+                  <h2
+                    id="preview-subject-heading"
+                    class="email-subject-heading"
+                    contenteditable="true"
+                    title="Click to edit subject line directly"
+                  >
+                    Request for Brief Sync: TechNova & CloudScale Synergies
+                  </h2>
+                </div>
+              </div>
+
+              <!-- Alternative Subject Suggestions -->
+              <div class="subject-alternatives-wrap">
+                <span class="subject-alt-label">✨ Alternative Subject Lines (Click to Swap):</span>
+                <div id="subject-options-container" class="subject-alt-chips">
+                  <!-- Alternative subject line chips -->
+                </div>
+              </div>
+
+              <!-- Metadata Envelope -->
+              <div class="email-meta-envelope">
+                <div class="avatar-info-cluster">
+                  <div id="preview-sender-avatar" class="sender-avatar">AR</div>
+                  <div class="sender-details">
+                    <div id="preview-sender-name" class="sender-name-line">Alex Rivera</div>
+                    <div id="preview-sender-role" class="sender-role-line">Senior Solutions Architect, TechNova</div>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="recipient-chip">
+                    <span>To:</span>
+                    <strong id="preview-recipient-pill">Dr. Sarah Jenkins</strong>
+                  </div>
+                  <div id="preview-timestamp" class="timestamp-pill">Just now</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email Body Content (In-Place Editable) -->
+            <div
+              id="preview-body-content"
+              class="email-body-content"
+              contenteditable="true"
+              title="Click anywhere to edit email copy directly"
+              spellcheck="false"
+            >
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- VIEW CONTAINER 2: Structured Sections Breakdown -->
+          <div id="view-sections-container" class="sections-breakdown-container" style="display: none;">
+            <!-- CARD: Subject Line -->
+            <div class="section-part-card">
+              <div class="part-header">
+                <span class="part-badge-tag part-badge-subject">1. Subject Line</span>
+                <div class="part-action-btns">
+                  <button type="button" class="btn btn-ghost btn-copy-part" data-target="part-subject" style="padding: 2px 8px; font-size: 0.72rem;">Copy</button>
+                </div>
+              </div>
+              <div id="part-subject" class="part-editable-text" contenteditable="true"></div>
+            </div>
+
+            <!-- CARD: Salutation -->
+            <div class="section-part-card">
+              <div class="part-header">
+                <span class="part-badge-tag part-badge-salutation">2. Salutation / Greeting</span>
+                <div class="part-action-btns">
+                  <button type="button" class="btn btn-ghost btn-copy-part" data-target="part-salutation" style="padding: 2px 8px; font-size: 0.72rem;">Copy</button>
+                </div>
+              </div>
+              <div id="part-salutation" class="part-editable-text" contenteditable="true"></div>
+            </div>
+
+            <!-- CARD: Opening Hook -->
+            <div class="section-part-card">
+              <div class="part-header">
+                <span class="part-badge-tag part-badge-opening">3. Opening Hook & Context</span>
+                <div class="part-action-btns">
+                  <button type="button" class="btn btn-ghost btn-copy-part" data-target="part-opening" style="padding: 2px 8px; font-size: 0.72rem;">Copy</button>
+                </div>
+              </div>
+              <div id="part-opening" class="part-editable-text" contenteditable="true"></div>
+            </div>
+
+            <!-- CARD: Body Details & Key Points -->
+            <div class="section-part-card">
+              <div class="part-header">
+                <span class="part-badge-tag part-badge-body">4. Body & Key Points</span>
+                <div class="part-action-btns">
+                  <button type="button" class="btn btn-ghost btn-copy-part" data-target="part-body" style="padding: 2px 8px; font-size: 0.72rem;">Copy</button>
+                </div>
+              </div>
+              <div id="part-body" class="part-editable-text" contenteditable="true"></div>
+            </div>
+
+            <!-- CARD: Call to Action -->
+            <div class="section-part-card">
+              <div class="part-header">
+                <span class="part-badge-tag part-badge-cta">5. Call to Action (Next Steps)</span>
+                <div class="part-action-btns">
+                  <button type="button" class="btn btn-ghost btn-copy-part" data-target="part-cta" style="padding: 2px 8px; font-size: 0.72rem;">Copy</button>
+                </div>
+              </div>
+              <div id="part-cta" class="part-editable-text" contenteditable="true"></div>
+            </div>
+
+            <!-- CARD: Sign-off & Signature -->
+            <div class="section-part-card">
+              <div class="part-header">
+                <span class="part-badge-tag part-badge-signoff">6. Sign-off & Signature</span>
+                <div class="part-action-btns">
+                  <button type="button" class="btn btn-ghost btn-copy-part" data-target="part-signoff" style="padding: 2px 8px; font-size: 0.72rem;">Copy</button>
+                </div>
+              </div>
+              <div id="part-signoff" class="part-editable-text" contenteditable="true"></div>
+            </div>
+          </div>
+
+          <!-- VIEW CONTAINER 3: Raw Markdown / Text -->
+          <div id="view-raw-container" style="display: none;">
+            <div id="raw-markdown-display" class="raw-code-container"></div>
+          </div>
+
+          <!-- Telemetry & Metrics Bar -->
+          <footer class="metrics-telemetry-bar">
+            <div class="metric-stat-group">
+              <div class="metric-item">
+                <span class="metric-label">Word Count</span>
+                <span id="metric-word-count" class="metric-value">134 words</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Estimated Read Time</span>
+                <span id="metric-read-time" class="metric-value">~40 sec</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Tone Calibration</span>
+                <span id="metric-tone-name" class="metric-value" style="color: #A5B4FC;">Polite & Warm</span>
+              </div>
+            </div>
+
+            <div class="metric-stat-group">
+              <div class="metric-item">
+                <span class="metric-label">Formality Index</span>
+                <div class="formality-meter">
+                  <div class="progress-track">
+                    <div id="metric-formality-bar" class="progress-fill" style="width: 80%;"></div>
+                  </div>
+                  <span id="metric-formality-percent" class="metric-value" style="font-size: 0.82rem;">80%</span>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </section>
+      </main>
+
+      <!-- History & Saved Drafts Modal Drawer -->
+      <div id="history-modal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">
+            <h2 class="modal-title">Saved Email Drafts & History</h2>
+            <button type="button" id="btn-close-history" class="btn btn-ghost btn-icon-only">✕</button>
+          </div>
+          <div id="history-list-container" class="modal-body">
+            <!-- Dynamically populated history cards -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings & Configuration Modal -->
+      <div id="settings-modal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">
+            <h2 class="modal-title">⚙️ Settings & Email Configuration</h2>
+            <button type="button" id="btn-close-settings" class="btn btn-ghost btn-icon-only">✕</button>
+          </div>
+          <div class="modal-body">
+            <!-- Gmail SMTP Section -->
+            <div style="margin-bottom: 20px;">
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.1rem;">📧</span> Gmail SMTP (Send Real Emails)
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+                Connect your Gmail account to send drafted emails directly to recipients.
+                You need a <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color: #818CF8; text-decoration: underline;">Google App Password</a> (not your regular password).
+              </p>
+
+              <div class="form-group">
+                <label for="input-gmail-user" class="form-label">Gmail Address</label>
+                <input
+                  type="email"
+                  id="input-gmail-user"
+                  class="input-field"
+                  placeholder="yourname@gmail.com"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="input-gmail-pass" class="form-label">
+                  App Password
+                  <span class="form-label-hint"><a href="https://myaccount.google.com/apppasswords" target="_blank" style="color: #818CF8;">Generate one →</a></span>
+                </label>
+                <input
+                  type="password"
+                  id="input-gmail-pass"
+                  class="input-field"
+                  placeholder="xxxx xxxx xxxx xxxx"
+                />
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                <button type="button" id="btn-save-gmail" class="btn btn-primary" style="flex: 1;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Save & Connect Gmail
+                </button>
+                <button type="button" id="btn-test-gmail" class="btn btn-secondary">Test Connection</button>
+              </div>
+
+              <div id="gmail-status-box" style="margin-top: 10px; padding: 8px 12px; border-radius: var(--radius-md); font-size: 0.8rem; display: none;"></div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0;" />
+
+            <!-- Gemini API Section -->
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.1rem;">🤖</span> Google Gemini API (Optional AI Engine)
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+                Optionally connect Gemini for live LLM-powered email generation. The built-in engine works great without it.
+              </p>
+
+              <div class="form-group">
+                <label for="input-api-key" class="form-label">
+                  Gemini API Key
+                  <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-size: 0.75rem; color: var(--primary); text-decoration: underline; margin-left: 6px;">Get Free Key ↗</a>
+                </label>
+                <input
+                  type="password"
+                  id="input-api-key"
+                  class="input-field"
+                  placeholder="AIzaSy... (free key from Google AI Studio)"
+                />
+              </div>
+
+              <!-- Gemini Validation Status Box -->
+              <div id="gemini-status-box" style="display: none; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.82rem; margin-top: 8px; line-height: 1.4;"></div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+                <button type="button" id="btn-clear-key" class="btn btn-ghost">Remove Key</button>
+                <button type="button" id="btn-test-gemini-key" class="btn btn-secondary">Test Key</button>
+                <button type="button" id="btn-save-key" class="btn btn-primary">Save Gemini Key</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Send Email Modal -->
+      <div id="send-modal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">
+            <h2 class="modal-title">📤 Send Email</h2>
+            <button type="button" id="btn-close-send" class="btn btn-ghost btn-icon-only">✕</button>
+          </div>
+          <div class="modal-body">
+            <!-- Connection Status -->
+            <div id="send-smtp-status" style="padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.82rem; margin-bottom: 14px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34D399;">
+              ✅ Gmail SMTP connected
+            </div>
+
+            <!-- Subject Preview -->
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <div id="send-subject-preview" style="padding: 8px 12px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; color: var(--text-main);">—</div>
+            </div>
+
+            <!-- Recipient Email Input -->
+            <div class="form-group">
+              <label for="input-send-to" class="form-label">
+                Recipient Email Address
+                <span class="form-label-hint">Where to send this email</span>
+              </label>
+              <input
+                type="email"
+                id="input-send-to"
+                class="input-field"
+                placeholder="recipient@company.com"
+                style="font-size: 0.95rem; padding: 12px 14px;"
+              />
+            </div>
+
+            <!-- Email Body Preview (collapsed) -->
+            <details style="margin-bottom: 14px;">
+              <summary style="font-size: 0.8rem; color: var(--text-muted); cursor: pointer; font-weight: 600;">▶ Preview email body</summary>
+              <div id="send-body-preview" style="margin-top: 8px; padding: 12px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-main); white-space: pre-wrap; max-height: 200px; overflow-y: auto; line-height: 1.6;">—</div>
+            </details>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Option 1: Open Directly in Gmail Web Compose (Guaranteed to open Gmail Compose in browser) -->
+              <button type="button" id="btn-send-gmail-web" class="btn" style="width: 100%; padding: 13px 16px; font-size: 0.95rem; font-weight: 700; gap: 10px; background: #EA4335; color: #ffffff; border: none; border-radius: var(--radius-md); cursor: pointer; box-shadow: 0 4px 14px rgba(234, 67, 53, 0.35); transition: transform 0.15s, box-shadow 0.15s;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>Open in Gmail (Web Browser)</span>
+              </button>
+              <div style="font-size: 0.74rem; color: var(--text-muted); text-align: center; margin-top: -5px; line-height: 1.4;">
+                Opens your Gmail in a new tab with Recipient, Subject & Body pre-filled in the compose box!
+              </div>
+
+              <!-- Option 2: 1-Click Direct Send via Gmail SMTP backend -->
+              <button type="button" id="btn-confirm-send" class="btn btn-primary" style="width: 100%; padding: 12px 16px; font-size: 0.92rem; font-weight: 700; gap: 8px;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span>Send Instantly (1-Click Delivery)</span>
+              </button>
+
+              <!-- Option 3: Outlook Web & Desktop Mail App -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 2px;">
+                <button type="button" id="btn-send-outlook-web" class="btn btn-secondary" style="padding: 9px 12px; font-size: 0.82rem; font-weight: 600; justify-content: center; gap: 6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#0078D4"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V7l9 5.5L21 7v12z"/></svg>
+                  <span>Outlook Web</span>
+                </button>
+                <button type="button" id="btn-send-mailto" class="btn btn-secondary" style="padding: 9px 12px; font-size: 0.82rem; font-weight: 600; justify-content: center; gap: 6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <span>Desktop App</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Send Status -->
+            <div id="send-result-box" style="margin-top: 12px; display: none; padding: 12px 14px; border-radius: var(--radius-md); font-size: 0.85rem; line-height: 1.5;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-Step Guided AI Prompt Wizard Modal -->
+      <div id="wizard-modal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-dialog wizard-dialog" style="max-width: 680px;">
+          <!-- Wizard Header with Stepper Progress Bar -->
+          <div class="modal-header wizard-header">
+            <div>
+              <div class="wizard-tag">✨ Guided AI Assistant</div>
+              <h2 class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+                AI Email Prompt Wizard
+              </h2>
+            </div>
+            <button type="button" id="btn-close-wizard" class="btn btn-ghost btn-icon-only">✕</button>
+          </div>
+
+          <!-- Wizard Step Indicator Bar -->
+          <div class="wizard-stepper-bar">
+            <div class="wizard-step-node active" data-step="1">
+              <span class="step-num">1</span>
+              <span class="step-label">Receiver</span>
+            </div>
+            <div class="wizard-step-connector"></div>
+            <div class="wizard-step-node" data-step="2">
+              <span class="step-num">2</span>
+              <span class="step-label">Sender</span>
+            </div>
+            <div class="wizard-step-connector"></div>
+            <div class="wizard-step-node" data-step="3">
+              <span class="step-num">3</span>
+              <span class="step-label">Prompt</span>
+            </div>
+            <div class="wizard-step-connector"></div>
+            <div class="wizard-step-node" data-step="4">
+              <span class="step-num">4</span>
+              <span class="step-label">Reconfirm</span>
+            </div>
+          </div>
+
+          <div class="modal-body wizard-body">
+            <!-- STEP 1: Receiver's Details -->
+            <div id="wizard-step-1" class="wizard-step-panel">
+              <div class="wizard-step-intro">
+                <h3>1. Receiver's Details</h3>
+                <p>Who should receive this email? Enter their name and details so the AI can calibrate an executive greeting.</p>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="wizard-recipient-name" class="form-label">Receiver's Name <span style="color: var(--accent-rose);">*</span></label>
+                  <input
+                    type="text"
+                    id="wizard-recipient-name"
+                    class="input-field"
+                    placeholder="e.g. Dr. Sarah Jenkins"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="wizard-recipient-email" class="form-label">Receiver's Email Address</label>
+                  <input
+                    type="email"
+                    id="wizard-recipient-email"
+                    class="input-field"
+                    placeholder="e.g. sarah.jenkins@company.com"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="wizard-recipient-role" class="form-label">Receiver's Title / Organization</label>
+                <input
+                  type="text"
+                  id="wizard-recipient-role"
+                  class="input-field"
+                  placeholder="e.g. VP of Product at CloudScale Systems"
+                />
+              </div>
+
+              <div class="wizard-quick-chips">
+                <span style="font-size: 0.74rem; color: var(--text-dim);">Quick Suggestions:</span>
+                <button type="button" class="wizard-chip-role" data-role="VP of Engineering, CloudScale">VP of Engineering</button>
+                <button type="button" class="wizard-chip-role" data-role="Hiring Manager, Talent Acquisition">Hiring Manager</button>
+                <button type="button" class="wizard-chip-role" data-role="Managing Director, Global Ventures">Managing Director</button>
+                <button type="button" class="wizard-chip-role" data-role="Senior Product Lead">Product Lead</button>
+              </div>
+
+              <div class="wizard-step-actions">
+                <div></div>
+                <button type="button" id="btn-wizard-to-step-2" class="btn btn-primary" style="padding: 10px 22px; font-weight: 700;">
+                  Next: Sender's Details ➔
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Sender's Details -->
+            <div id="wizard-step-2" class="wizard-step-panel" style="display: none;">
+              <div class="wizard-step-intro">
+                <h3>2. Sender's Details</h3>
+                <p>Who is sending this email? This calibrates your signature sign-off block.</p>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="wizard-sender-name" class="form-label">Your Name <span style="color: var(--accent-rose);">*</span></label>
+                  <input
+                    type="text"
+                    id="wizard-sender-name"
+                    class="input-field"
+                    placeholder="e.g. Alex Rivera"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="wizard-sender-role" class="form-label">Your Title / Organization</label>
+                  <input
+                    type="text"
+                    id="wizard-sender-role"
+                    class="input-field"
+                    placeholder="e.g. Senior Solutions Architect, TechNova"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Configured Sending Account</label>
+                <div id="wizard-sender-email-badge" style="padding: 10px 14px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between;">
+                  <span>📧 Sending Account: <strong id="wizard-sender-email-text" style="color: var(--text-main);">Checking...</strong></span>
+                  <span id="wizard-sender-smtp-indicator" style="font-size: 0.74rem; color: #10B981; font-weight: 600;">● Ready</span>
+                </div>
+              </div>
+
+              <div class="wizard-step-actions">
+                <button type="button" id="btn-wizard-back-to-1" class="btn btn-secondary">
+                  ⬅ Back: Receiver
+                </button>
+                <button type="button" id="btn-wizard-to-step-3" class="btn btn-primary" style="padding: 10px 22px; font-weight: 700;">
+                  Next: What to Write ➔
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: What to Write (Small Prompt) -->
+            <div id="wizard-step-3" class="wizard-step-panel" style="display: none;">
+              <div class="wizard-step-intro">
+                <h3>3. What should this email be about?</h3>
+                <p>Type a short, conversational prompt in simple words. Google Gemini AI will expand and craft it with executive polish.</p>
+              </div>
+
+              <div class="form-group">
+                <label for="wizard-prompt-input" class="form-label">
+                  Your Prompt / What to Write <span style="color: var(--accent-rose);">*</span>
+                  <span class="form-label-hint">Simple everyday language</span>
+                </label>
+                <textarea
+                  id="wizard-prompt-input"
+                  class="input-field"
+                  rows="4"
+                  placeholder="e.g. Ask for a 30-minute sync this Thursday at 3 PM to review our product design proposal, mention that the initial mockups are ready for feedback, and ask who else from engineering should attend."
+                  style="font-family: inherit; font-size: 0.92rem; line-height: 1.5; resize: vertical;"
+                ></textarea>
+              </div>
+
+              <!-- Quick prompt ideas chips -->
+              <div class="wizard-quick-chips">
+                <span style="font-size: 0.74rem; color: var(--text-dim);">Prompt Starters:</span>
+                <button type="button" class="wizard-chip-prompt" data-prompt="Request a 30-minute meeting later this week to align on our project roadmap milestones and confirm deliverable timelines.">📅 Meeting Sync</button>
+                <button type="button" class="wizard-chip-prompt" data-prompt="Provide a crisp status update on our current milestone: development is on track, tests are passing, and we expect deployment by Friday EOD.">🚀 Progress Update</button>
+                <button type="button" class="wizard-chip-prompt" data-prompt="Friendly follow-up regarding the proposal sent last week to check if they had a chance to review and if they need any clarification.">📬 Follow-Up</button>
+                <button type="button" class="wizard-chip-prompt" data-prompt="Introduce our software solution to streamline team workflows, cite mutual benefits, and propose a brief introductory call.">🤝 Partnership</button>
+              </div>
+
+              <div class="form-grid-2" style="margin-top: 12px;">
+                <div class="form-group">
+                  <label for="wizard-tone-select" class="form-label">Tone Calibration</label>
+                  <select id="wizard-tone-select" class="select-field">
+                    <option value="polite">Polite & Warm (Recommended)</option>
+                    <option value="formal">Formal & Executive</option>
+                    <option value="concise">Concise & Direct</option>
+                    <option value="persuasive">Persuasive & Value-Driven</option>
+                    <option value="urgent">Urgent & Time-Sensitive</option>
+                    <option value="casual">Casual & Friendly</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Gemini AI Status</label>
+                  <div id="wizard-gemini-status-pill" style="padding: 9px 12px; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: var(--radius-md); font-size: 0.8rem; color: #A5B4FC; display: flex; align-items: center; justify-content: space-between;">
+                    <span id="wizard-gemini-status-text">Checking Gemini key...</span>
+                    <button type="button" id="btn-wizard-toggle-key-input" class="btn btn-ghost" style="padding: 2px 6px; font-size: 0.72rem;">Set Key</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Collapsible inline Gemini key input -->
+              <div id="wizard-inline-key-box" style="display: none; padding: 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); margin-top: 10px;">
+                <label for="wizard-gemini-key-input" class="form-label" style="display: flex; justify-content: space-between;">
+                  <span>Google Gemini API Key</span>
+                  <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color: var(--primary); font-size: 0.75rem; text-decoration: underline;">Get free key ↗</a>
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="password" id="wizard-gemini-key-input" class="input-field" placeholder="AIzaSy... (Paste Gemini API key)" />
+                  <button type="button" id="btn-wizard-save-key" class="btn btn-primary" style="white-space: nowrap;">Save Key</button>
+                </div>
+              </div>
+
+              <div class="wizard-step-actions">
+                <button type="button" id="btn-wizard-back-to-2" class="btn btn-secondary">
+                  ⬅ Back: Sender
+                </button>
+                <button type="button" id="btn-wizard-generate-submit" class="btn btn-primary btn-primary-generate" style="padding: 10px 22px; font-weight: 700;">
+                  <span id="wizard-generate-spinner" style="display: none;">⏳ </span>
+                  <span id="wizard-generate-btn-text">✨ Generate Email with Gemini</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 4: Review & Reconfirm -->
+            <div id="wizard-step-4" class="wizard-step-panel" style="display: none;">
+              <div class="wizard-step-intro" style="display: flex; align-items: flex-start; justify-content: space-between;">
+                <div>
+                  <h3>4. Review & Reconfirm Email</h3>
+                  <p>Check the draft below, tweak any words directly, and confirm to send or copy.</p>
+                </div>
+                <span id="wizard-deliverability-badge" class="section-badge" style="background: rgba(16, 185, 129, 0.15); color: #34D399; font-weight: 700;">
+                  🛡️ Anti-Spam Verified
+                </span>
+              </div>
+
+              <!-- Context Recipient Strip -->
+              <div class="wizard-reconfirm-strip">
+                <div><span>To:</span> <strong id="reconfirm-recipient-text">—</strong></div>
+                <div><span>From:</span> <strong id="reconfirm-sender-text">—</strong></div>
+                <div><span>Engine:</span> <span id="reconfirm-engine-tag" style="color: #A78BFA; font-weight: 600;">Gemini Cloud</span></div>
+              </div>
+
+              <!-- Primary Subject -->
+              <div class="form-group" style="margin-top: 10px;">
+                <label for="wizard-output-subject" class="form-label">Subject Line (Editable)</label>
+                <input
+                  type="text"
+                  id="wizard-output-subject"
+                  class="input-field"
+                  style="font-weight: 700; font-size: 0.95rem;"
+                />
+              </div>
+
+              <!-- Alternative Subjects -->
+              <div id="wizard-output-alt-subjects" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;"></div>
+
+              <!-- Full Email Body (Editable) -->
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label for="wizard-output-body" class="form-label" style="margin-bottom: 0;">Email Body (Click to edit directly)</label>
+                  <span id="wizard-output-metrics" style="font-size: 0.74rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">0 words</span>
+                </div>
+                <textarea
+                  id="wizard-output-body"
+                  class="input-field"
+                  rows="10"
+                  style="font-family: inherit; font-size: 0.94rem; line-height: 1.65; white-space: pre-wrap;"
+                ></textarea>
+              </div>
+
+              <!-- Reconfirm Action Grid -->
+              <div class="wizard-confirm-box">
+                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
+                  Ready to proceed? Confirm your delivery action:
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                  <!-- Option A: 1-Click Send via SMTP -->
+                  <button type="button" id="btn-wizard-direct-send" class="btn btn-primary" style="padding: 12px 14px; font-weight: 700; gap: 8px; justify-content: center;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>Send via Gmail (1-Click)</span>
+                  </button>
+
+                  <!-- Option B: Open in Gmail Web Compose -->
+                  <button type="button" id="btn-wizard-open-gmail" class="btn" style="background: #EA4335; color: white; padding: 12px 14px; font-weight: 700; gap: 8px; justify-content: center; border: none; border-radius: var(--radius-md); cursor: pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>Open in Gmail Web</span>
+                  </button>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <button type="button" id="btn-wizard-copy-email" class="btn btn-secondary" style="flex: 1; justify-content: center;">
+                    📋 Copy to Clipboard
+                  </button>
+                  <button type="button" id="btn-wizard-apply-studio" class="btn btn-secondary" style="flex: 1; justify-content: center;">
+                    ✅ Apply to Main Studio
+                  </button>
+                  <button type="button" id="btn-wizard-back-to-3" class="btn btn-ghost" title="Edit prompt and regenerate">
+                    🔄 Edit Prompt
+                  </button>
+                </div>
+
+                <div id="wizard-send-status-alert" style="display: none; margin-top: 10px; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.82rem; line-height: 1.4;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Alerts Container -->
+      <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    </div>
+
+    <!-- Main Logic Script -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
